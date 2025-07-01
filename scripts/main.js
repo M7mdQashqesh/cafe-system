@@ -20,14 +20,14 @@ async function getData(link, place) {
     productName.textContent = allData[i].name;
     div.appendChild(productName);
 
-    let shortDesc = document.createElement("p");
-    shortDesc.className = "short-description";
-    shortDesc.textContent = allData[i].shortDescription;
-    div.appendChild(shortDesc);
+    let longDescription = document.createElement("p");
+    longDescription.className = "long-description";
+    longDescription.textContent = allData[i].longDescription;
+    div.appendChild(longDescription);
 
     let productPrice = document.createElement("p");
     productPrice.className = "product-price";
-    productPrice.textContent = allData[i].price;
+    productPrice.textContent = `${allData[i].price} ₪`;
     div.appendChild(productPrice);
 
     div.addEventListener("click", function () {

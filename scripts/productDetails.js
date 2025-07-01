@@ -2,6 +2,11 @@ let productDetails = JSON.parse(window.localStorage.getItem("productDetails"));
 let productDetailsDiv = document.getElementById("product-details");
 let goBackBtn = document.querySelector(".go-back");
 let quantity = 1;
+let totalPrice = productDetails.price;
+
+document.querySelector(".logo").addEventListener("click", () => {
+  window.location.href = "../index.html";
+});
 
 if (productDetails) {
   generateProductDetails();
@@ -27,7 +32,7 @@ function generateProductDetails() {
   </div>
 
   <div style="position:fixed; width:100%; left:0;bottom:0; background: var(--secondary-color); display: flex; align-items:center; justify-content: space-between; padding: 0px 30px;">
-    <p style="color:white; font-size:25px; font-weight:bold">${productDetails.price}</p>
+    <p class="total-price" style="color:white; font-size:25px; font-weight:bold">${totalPrice} ₪</p>
     <button onclick="addToCart()" style="padding: 8px 20px; font-size: 20px; border:none;outline:none; border-radius: 6px; background-color:white;font-weight:bold">Add To Cart</button>
   </div>
   `;
@@ -38,8 +43,10 @@ function generateProductDetails() {
     if (isNaN(val) || val < 1) {
       quantity = 1;
       this.value = quantity;
+      editTotalPrice();
     } else {
       quantity = val;
+      editTotalPrice();
     }
   });
 }
@@ -47,12 +54,14 @@ function generateProductDetails() {
 function increaseQuantity() {
   quantity++;
   document.querySelector("input").value = quantity;
+  editTotalPrice();
 }
 
 function decreaseQuantity() {
   if (quantity > 1) {
     quantity--;
     document.querySelector("input").value = quantity;
+    editTotalPrice();
   }
 }
 
@@ -61,9 +70,14 @@ function addToCart() {
     JSON.parse(window.localStorage.getItem("cartDetails")) || [];
   let pDetails = {
     name: productDetails.name,
-    price: productDetails.price,
-    pQuantity: quantity,
+    totalPrice: totalPrice,
+    quantity: quantity,
   };
   cartDetails.push(pDetails);
   window.localStorage.setItem("cartDetails", JSON.stringify(cartDetails));
+}
+
+function editTotalPrice() {
+  totalPrice = productDetails.price * quantity;
+  document.querySelector(".total-price").textContent = `${totalPrice} ₪`;
 }

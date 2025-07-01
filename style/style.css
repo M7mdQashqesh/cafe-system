@@ -153,8 +153,8 @@ header i {
   line-height: 1.4;
 }
 
-.varieties .product .short-description {
-  color: white;
+.varieties .product .long-description {
+  color: #777;
   margin: 20px 5px 60px 10px;
   font-size: 12px;
   overflow: hidden;
