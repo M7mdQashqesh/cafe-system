@@ -1,6 +1,5 @@
 let productDetails = JSON.parse(window.localStorage.getItem("productDetails"));
 let productDetailsDiv = document.getElementById("product-details");
-let goBackBtn = document.querySelector(".go-back");
 let quantity = 1;
 let totalPrice = productDetails.price;
 
@@ -8,13 +7,19 @@ document.querySelector(".logo").addEventListener("click", () => {
   window.location.href = "../index.html";
 });
 
+document.querySelector(".go-back").addEventListener("click", function () {
+  window.location.href = "../index.html";
+});
+
+document
+  .querySelector(".fa-cart-shopping")
+  .addEventListener("click", function () {
+    window.location.href = "../pages/cart.html";
+  });
+
 if (productDetails) {
   generateProductDetails();
 }
-
-goBackBtn.addEventListener("click", function () {
-  window.location.href = "../index.html";
-});
 
 function generateProductDetails() {
   let details = `
@@ -69,6 +74,7 @@ function addToCart() {
   let cartDetails =
     JSON.parse(window.localStorage.getItem("cartDetails")) || [];
   let pDetails = {
+    src:productDetails.src,
     name: productDetails.name,
     totalPrice: totalPrice,
     quantity: quantity,

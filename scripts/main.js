@@ -1,3 +1,8 @@
+let cart = document.querySelector(".fa-cart-shopping");
+cart.addEventListener("click", function () {
+  window.location.href = "../pages/cart.html";
+});
+
 async function getData(link, place) {
   let productsArea = document.querySelector(`.varieties .${place} .products`);
 
