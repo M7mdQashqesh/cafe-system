@@ -1,0 +1,30 @@
+[
+  {
+    "src": "../assets/sweets/sweet1.jpg",
+    "name": "Chocolate Cake",
+    "price": "14₪",
+    "shortDescription": "Rich and moist chocolate cake.",
+    "longDescription": "A deliciously moist chocolate cake made with premium cocoa and layered with creamy chocolate frosting. Perfect for dessert lovers seeking deep flavor."
+  },
+  {
+    "src": "../assets/sweets/sweet2.jpg",
+    "name": "Baklava",
+    "price": "10₪",
+    "shortDescription": "Traditional crispy baklava with nuts.",
+    "longDescription": "Authentic Middle Eastern baklava made with thin layers of phyllo dough, filled with crushed pistachios and walnuts, and soaked in aromatic syrup."
+  },
+  {
+    "src": "../assets/sweets/sweet3.jpg",
+    "name": "Cheesecake",
+    "price": "16₪",
+    "shortDescription": "Creamy New York-style cheesecake.",
+    "longDescription": "A smooth and creamy New York-style cheesecake with a buttery biscuit crust and a subtle vanilla flavor. Served chilled for the perfect finish."
+  },
+  {
+    "src": "../assets/sweets/sweet4.jpg",
+    "name": "Donuts",
+    "price": "9₪",
+    "shortDescription": "Freshly glazed assorted donuts.",
+    "longDescription": "Soft and fluffy donuts freshly made every day. Comes in a variety of glazes and toppings, perfect for a quick sweet snack or with coffee."
+  }
+]

@@ -1,0 +1,175 @@
+:root {
+  --primary-color: rgb(17 20 37);
+  --secondary-color: rgb(32 40 63);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--primary-color);
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+/* Small Screen */
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+
+/* Medium Screen */
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+
+/* Large Screen */
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  width: 120px;
+}
+
+.logo img {
+  max-width: 100%;
+}
+/* Logo */
+
+/* Navbar */
+nav ul {
+  margin: 0;
+  padding: 0;
+}
+
+header i {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+}
+/* Navbar */
+/* Header */
+
+/* Categories */
+.categories p {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.categories ul {
+  padding: 0;
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.categories ul li a {
+  padding: 8px 30px;
+  font-size: 18px;
+  color: white;
+  background-color: var(--secondary-color);
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.categories ul li a.active {
+  background: linear-gradient(rgb(251 160 104), rgb(234 115 108));
+}
+/* Categories */
+
+/* Varieties */
+.varieties > div.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.varieties > div > p {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 50px;
+  margin-bottom: 0;
+}
+
+.varieties .products {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 50px;
+}
+
+@media (max-width: 991px) {
+  .varieties .products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px 20px;
+  }
+}
+
+.varieties .product {
+  background-color: var(--secondary-color);
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+}
+
+.varieties .product .product-name {
+  color: white;
+  font-weight: bold;
+  margin: 20px 5px 0px 10px;
+  line-height: 1.4;
+}
+
+.varieties .product .short-description {
+  color: white;
+  margin: 20px 5px 60px 10px;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.varieties .product .product-price {
+  background: linear-gradient(rgb(192 17 114), rgb(234 115 108));
+  position: absolute;
+  right: -5px;
+  bottom: -29px;
+  border-radius: 50%;
+  padding: 18px 10px;
+  color: white;
+  font-weight: bold;
+}
+/* Varieties */
