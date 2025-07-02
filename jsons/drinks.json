@@ -3,28 +3,24 @@
     "src": "../assets/drinks/drink1.jpg",
     "name": "Lemon Mint",
     "price": "8",
-    "shortDescription": "Refreshing lemon and mint blend.",
-    "longDescription": "A cold, tangy blend of freshly squeezed lemons and garden-fresh mint leaves. Served chilled, it’s the perfect thirst-quencher on a hot day."
+    "description": "A cold, tangy blend of freshly squeezed lemons and garden-fresh mint leaves. Served chilled, it’s the perfect thirst-quencher on a hot day."
   },
   {
     "src": "../assets/drinks/drink2.jpg",
     "name": "Iced Coffee",
     "price": "12",
-    "shortDescription": "Cold brew coffee with a smooth kick.",
-    "longDescription": "A bold yet smooth cold brew coffee served over ice. Lightly sweetened with optional milk or syrup — ideal for coffee lovers looking for a refreshing boost."
+    "description": "A bold yet smooth cold brew coffee served over ice. Lightly sweetened with optional milk or syrup — ideal for coffee lovers looking for a refreshing boost."
   },
   {
     "src": "../assets/drinks/drink3.jpg",
     "name": "Strawberry Smoothie",
     "price": "15",
-    "shortDescription": "Creamy strawberry fruit smoothie.",
-    "longDescription": "A thick and creamy smoothie made with real strawberries and yogurt. Naturally sweet and full of flavor, perfect as a sweet drink or light snack."
+    "description": "A thick and creamy smoothie made with real strawberries and yogurt. Naturally sweet and full of flavor, perfect as a sweet drink or light snack."
   },
   {
     "src": "../assets/drinks/drink4.jpg",
     "name": "Mango Juice",
     "price": "10",
-    "shortDescription": "Sweet tropical mango juice.",
-    "longDescription": "A smooth and naturally sweet juice made from ripe mangoes. Served cold and packed with tropical flavor — a true summer favorite."
+    "description": "A smooth and naturally sweet juice made from ripe mangoes. Served cold and packed with tropical flavor — a true summer favorite."
   }
 ]

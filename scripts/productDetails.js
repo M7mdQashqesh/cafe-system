@@ -23,22 +23,22 @@ if (productDetails) {
 
 function generateProductDetails() {
   let details = `
-  <div style="background-image: url(${productDetails.src}); background-size: cover; background-position: center center; width: 100%; height: 440px;"></div>
-  <p style="color:white; font-weight:bold; font-size: 25px">${productDetails.name}</p>
-  <p style="color:#777; line-height: 1.6; font-size: 18px">${productDetails.longDescription}</p>
+  <div class="product-image" style="background-image: url(${productDetails.src});"></div>
+  <p class="product-name">${productDetails.name}</p>
+  <p class="product-description">${productDetails.description}</p>
 
-  <div style="display:flex; align-items: center; justify-content: space-between;  margin-bottom: 100px">
-    <p style="color:white; font-size: 20px; font-weight:bold">Quantity:</p>
-    <div style="display: flex; gap: 10px;">
-      <button onclick="increaseQuantity()" style="background : var(--secondary-color); border:none; outline:none; color:white; font-size:30px; width:40px">+</button>
-      <input type="number" value=${quantity} min="1" style="width:80px ;border:none; outline:none; background:var(--secondary-color);padding: 5px; color: white; text-align:center; font-size: 20px"/>
-      <button onclick="decreaseQuantity()" style="background : var(--secondary-color); border:none; outline:none; color:white; font-size:30px; width:40px">-</button>
+  <div class="quantity">
+    <p>Quantity:</p>
+    <div>
+      <button onclick="increaseQuantity()">+</button>
+      <input type="number" value=${quantity} min="1" />
+      <button onclick="decreaseQuantity()">-</button>
     </div>
   </div>
 
-  <div style="position:fixed; width:100%; left:0;bottom:0; background: var(--secondary-color); display: flex; align-items:center; justify-content: space-between; padding: 0px 30px;">
-    <p class="total-price" style="color:white; font-size:25px; font-weight:bold">${totalPrice} ₪</p>
-    <button onclick="addToCart()" style="padding: 8px 20px; font-size: 20px; border:none;outline:none; border-radius: 6px; background-color:white;font-weight:bold">Add To Cart</button>
+  <div class="price-and-add">
+    <p class="total-price">${totalPrice} ₪</p>
+    <button onclick="addToCart()">Add To Cart</button>
   </div>
   `;
   productDetailsDiv.innerHTML = details;
@@ -71,16 +71,29 @@ function decreaseQuantity() {
 }
 
 function addToCart() {
-  let cartDetails =
-    JSON.parse(window.localStorage.getItem("cartDetails")) || [];
+  let cartProducts =
+    JSON.parse(window.localStorage.getItem("cartProducts")) || [];
   let pDetails = {
-    src:productDetails.src,
+    src: productDetails.src,
     name: productDetails.name,
-    totalPrice: totalPrice,
     quantity: quantity,
+    totalPrice: totalPrice,
+    description: productDetails.description,
   };
-  cartDetails.push(pDetails);
-  window.localStorage.setItem("cartDetails", JSON.stringify(cartDetails));
+  cartProducts.push(pDetails);
+  window.localStorage.setItem("cartProducts", JSON.stringify(cartProducts));
+  // Notification
+  Toastify({
+    text: "The product was added to the cart",
+    duration: 3000,
+    gravity: "top",
+    position: "right",
+    stopOnFocus: false,
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+    onClick: function () {},
+  }).showToast();
 }
 
 function editTotalPrice() {

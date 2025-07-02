@@ -14,8 +14,16 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <!-- Toastify Library -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
     <!-- Main CSS File -->
     <link rel="stylesheet" href="../style/style.css" />
+    <!-- Cart CSS file -->
+    <link rel="stylesheet" href="../style//cart.css" />
   </head>
   <body>
     <div class="container">
@@ -34,9 +42,17 @@
       <!-- Header -->
 
       <!-- Main -->
-      <main id="products"></main>
+      <main>
+        <div id="products"></div>
+        <div id="total-price-for-total-products"></div>
+      </main>
       <!-- Main -->
 
+      <!-- Toastify Library -->
+      <script
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/toastify-js"
+      ></script>
       <!-- Car JavaScript File -->
       <script src="../scripts/cart.js"></script>
     </div>

@@ -25,10 +25,10 @@ async function getData(link, place) {
     productName.textContent = allData[i].name;
     div.appendChild(productName);
 
-    let longDescription = document.createElement("p");
-    longDescription.className = "long-description";
-    longDescription.textContent = allData[i].longDescription;
-    div.appendChild(longDescription);
+    let description = document.createElement("p");
+    description.className = "long-description";
+    description.textContent = allData[i].description;
+    div.appendChild(description);
 
     let productPrice = document.createElement("p");
     productPrice.className = "product-price";
@@ -39,7 +39,7 @@ async function getData(link, place) {
       let pDetails = {
         src: allData[i].src,
         name: allData[i].name,
-        longDescription: allData[i].longDescription,
+        description: allData[i].description,
         price: allData[i].price,
       };
       window.localStorage.setItem("productDetails", JSON.stringify(pDetails));
