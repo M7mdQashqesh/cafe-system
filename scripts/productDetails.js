@@ -1,27 +1,27 @@
-let productDetails = JSON.parse(window.localStorage.getItem("productDetails"));
-let productDetailsDiv = document.getElementById("product-details");
-let quantity = 1;
-let totalPrice = productDetails.price;
-
+// Add navigation events to header elements: logo, go back, and cart icon
 document.querySelector(".logo").addEventListener("click", () => {
   window.location.href = "../index.html";
 });
-
 document.querySelector(".go-back").addEventListener("click", function () {
   window.location.href = "../index.html";
 });
-
 document
   .querySelector(".fa-cart-shopping")
   .addEventListener("click", function () {
     window.location.href = "../pages/cart.html";
   });
 
-if (productDetails) {
-  generateProductDetails();
-}
+let productDetailsDiv = document.getElementById("product-details");
 
-function generateProductDetails() {
+let productDetails = JSON.parse(window.localStorage.getItem("productDetails"));
+let quantity = 1;
+let totalPrice = productDetails.price * quantity;
+
+if (productDetails) renderProductDetails();
+else window.location.href = "../index.html";
+
+// Render Product Details Page
+function renderProductDetails() {
   let details = `
   <div class="product-image" style="background-image: url(${productDetails.src});"></div>
   <p class="product-name">${productDetails.name}</p>
@@ -38,30 +38,39 @@ function generateProductDetails() {
 
   <div class="price-and-add">
     <p class="total-price">${totalPrice} ₪</p>
-    <button onclick="addToCart()">Add To Cart</button>
+    <button onclick="saveToCart()">Add To Cart</button>
   </div>
   `;
   productDetailsDiv.innerHTML = details;
-
-  document.querySelector("input").addEventListener("blur", function () {
-    let val = parseInt(this.value);
-    if (isNaN(val) || val < 1) {
-      quantity = 1;
-      this.value = quantity;
-      editTotalPrice();
-    } else {
-      quantity = val;
-      editTotalPrice();
-    }
-  });
 }
 
+// Update total price based on quantity
+function editTotalPrice() {
+  totalPrice = productDetails.price * quantity;
+  document.querySelector(".total-price").textContent = `${totalPrice} ₪`;
+}
+
+// On blur, validate quantity and update total price
+document.querySelector("input").addEventListener("blur", function () {
+  let val = parseInt(this.value);
+  if (isNaN(val) || val < 1) {
+    quantity = 1;
+    this.value = quantity;
+    editTotalPrice();
+  } else {
+    quantity = val;
+    editTotalPrice();
+  }
+});
+
+// Increment quantity and update total price
 function increaseQuantity() {
   quantity++;
   document.querySelector("input").value = quantity;
   editTotalPrice();
 }
 
+// Decrement quantity (min 1) and update total price
 function decreaseQuantity() {
   if (quantity > 1) {
     quantity--;
@@ -70,7 +79,8 @@ function decreaseQuantity() {
   }
 }
 
-function addToCart() {
+// Add selected product to cart in localStorage and show confirmation toast notification
+function saveToCart() {
   let cartProducts =
     JSON.parse(window.localStorage.getItem("cartProducts")) || [];
   let pDetails = {
@@ -82,6 +92,7 @@ function addToCart() {
   };
   cartProducts.push(pDetails);
   window.localStorage.setItem("cartProducts", JSON.stringify(cartProducts));
+
   // Notification
   Toastify({
     text: "The product was added to the cart",
@@ -94,9 +105,4 @@ function addToCart() {
     },
     onClick: function () {},
   }).showToast();
-}
-
-function editTotalPrice() {
-  totalPrice = productDetails.price * quantity;
-  document.querySelector(".total-price").textContent = `${totalPrice} ₪`;
 }
