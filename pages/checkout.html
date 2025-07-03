@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Title Tag -->
+    <title>Document</title>
+    <!-- Font Awesome Library -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Toastify Library -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="../style/style.css" />
+    <!-- Checkout CSS File -->
+    <link rel="stylesheet" href="../style/checkout.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header>
+        <!-- Go Back -->
+        <i class="fa-solid fa-chevron-left go-back"></i>
+        <!-- Go Back -->
+
+        <!-- Logo -->
+        <div class="logo">
+          <img src="../assets/logo-transperent.png" alt="logo" />
+        </div>
+        <!-- Logo -->
+      </header>
+      <!-- Header -->
+
+      <p>Shipping</p>
+      <!-- Main -->
+      <main>
+        <form>
+          <div>
+            <label for="user-name">Your Full Name</label>
+            <input type="text" name="username" id="user-name" required />
+          </div>
+          <div>
+            <label for="phone-number">Your Phone Number</label>
+            <input type="text" name="phoneNumber" id="phone-number" required />
+          </div>
+          <div>
+            <label for="address">Your Address</label>
+            <input type="text" name="address" id="address" required />
+          </div>
+          <button>Submit Order</button>
+        </form>
+      </main>
+      <!-- Main -->
+    </div>
+
+    <!-- Toastify Library -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+    <!-- Checkout JavaScript File -->
+    <script src="../scripts/checkout.js"></script>
+  </body>
+</html>

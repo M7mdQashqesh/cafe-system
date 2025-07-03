@@ -94,16 +94,18 @@ let shippingCost = 15;
 // Calculate and display the total price including shipping
 function generateTotalPriceForTotalProducts() {
   let totalPriceForTotalProducts = 0;
+  let totalItems = 0;
 
   // Sum the total prices of all products in the cart
   products.forEach((product) => {
     totalPriceForTotalProducts += Number(product.totalPrice);
+    totalItems += product.quantity;
   });
 
   // Create HTML markup for the price summary
   let totalPriceForTotalProductsHTML = `
   <div class="sub-total">
-    <p>Sub Total (${products.length} item/s)</p>
+    <p>Sub Total (${totalItems} item/s)</p>
     <p>${totalPriceForTotalProducts} ₪</p>
   </div>
   <div class="shipping">
@@ -116,11 +118,15 @@ function generateTotalPriceForTotalProducts() {
     <p>Total Price</p>
     <p>${totalPriceForTotalProducts + shippingCost} ₪</p>
   </div>
-  <button class="checkout">Checkout</button>
+  <button onclick="checkout()" class="checkout">Checkout</button>
   `;
 
   // Update the total price container with the new markup
   totalPricesDiv.innerHTML = totalPriceForTotalProductsHTML;
+}
+
+function checkout() {
+  window.location.href = "../pages/checkout.html";
 }
 
 // Show the price summary if there are products in the cart, otherwise hide it
