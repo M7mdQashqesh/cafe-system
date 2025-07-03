@@ -1,3 +1,4 @@
+// Add navigation events to header elements: logo, and go back
 document.querySelector(".logo").addEventListener("click", function () {
   window.location.href = "../index.html";
 });
@@ -7,17 +8,23 @@ document.querySelector(".go-back").addEventListener("click", function () {
 });
 
 let productsContainer = document.getElementById("products");
-
-let products = JSON.parse(window.localStorage.getItem("cartProducts")) || [];
-if (products.length === 0) {
-  productsContainer.innerHTML = `<p class="empty-cart">No Items In Your Cart</p>`;
-}
-
 let totalPricesDiv = document.getElementById("total-price-for-total-products");
 
-function generateCartProducts() {
+// Retrieve cart products from localStorage
+let products = JSON.parse(window.localStorage.getItem("cartProducts")) || [];
+
+// If cart is empty, display 'No Items In Your Cart' message; otherwise, render cart products
+if (products.length === 0) {
+  productsContainer.innerHTML = `<p class="empty-cart">No Items In Your Cart</p>`;
+} else {
+  renderCartProducts();
+}
+
+// Render each product in the cart by creating HTML blocks and appending them to the container
+function renderCartProducts() {
+  let allProductsHTML = ``;
   products.forEach((product) => {
-    let productDiv = `
+    allProductsHTML += `
     <div class="product-div" >
       <div class="product-image" style="background-image: url(${product.src});"></div>
       <div class="details">
@@ -34,27 +41,37 @@ function generateCartProducts() {
       </div>
     </div>
     `;
-
-    productsContainer.innerHTML += productDiv;
   });
+  productsContainer.innerHTML = allProductsHTML;
 }
-generateCartProducts();
+
+// Remove product at given index from cart, update storage and UI
+function removeProduct(index) {
+  products.splice(index, 1);
+  window.localStorage.setItem("cartProducts", JSON.stringify(products));
+  updateCartUI();
+}
+
+// Update cart UI: render products, show empty message if needed, update totals
+function updateCartUI() {
+  productsContainer.innerHTML = "";
+  if (products.length === 0) {
+    productsContainer.innerHTML = `<p class="empty-cart">No Items In Your Cart</p>`;
+    totalPricesDiv.style.display = "none";
+  } else {
+    renderCartProducts();
+    totalPricesDiv.innerHTML = "";
+    generateTotalPriceForTotalProducts();
+  }
+}
 
 productsContainer.addEventListener("click", function (e) {
   if (e.target.classList.contains("fa-trash")) {
     let index = Array.from(
       productsContainer.querySelectorAll(".fa-trash")
     ).indexOf(e.target);
-    products.splice(index, 1);
-    window.localStorage.setItem("cartProducts", JSON.stringify(products));
-    productsContainer.innerHTML = "";
-    generateCartProducts();
-    if (products.length === 0) {
-      productsContainer.innerHTML = `<p class="empty-cart">No Items In Your Cart</p>`;
-      totalPricesDiv.style.display = "none";
-    } else {
-      totalPricesDiv.innerHTML = "";
-      generateTotalPriceForTotalProducts();
+    if (index !== -1) {
+      removeProduct(index);
     }
 
     // Notification
@@ -73,12 +90,17 @@ productsContainer.addEventListener("click", function (e) {
 });
 
 let shippingCost = 15;
+
+// Calculate and display the total price including shipping
 function generateTotalPriceForTotalProducts() {
   let totalPriceForTotalProducts = 0;
+
+  // Sum the total prices of all products in the cart
   products.forEach((product) => {
     totalPriceForTotalProducts += Number(product.totalPrice);
   });
 
+  // Create HTML markup for the price summary
   let totalPriceForTotalProductsHTML = `
   <div class="sub-total">
     <p>Sub Total (${products.length} item/s)</p>
@@ -97,8 +119,11 @@ function generateTotalPriceForTotalProducts() {
   <button class="checkout">Checkout</button>
   `;
 
+  // Update the total price container with the new markup
   totalPricesDiv.innerHTML = totalPriceForTotalProductsHTML;
 }
+
+// Show the price summary if there are products in the cart, otherwise hide it
 if (products.length > 0) {
   generateTotalPriceForTotalProducts();
 } else {
