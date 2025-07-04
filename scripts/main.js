@@ -16,7 +16,8 @@ async function getData(link, place) {
     productDiv.className = "product";
 
     let imageContainer = document.createElement("div");
-    imageContainer.style.cssText = `background-image: url(${allData[i].src}); background-size:cover; background-position: center; width: 100%; height: 220px`;
+    imageContainer.className = "bg-image"
+    imageContainer.style.cssText = `background-image: url(${allData[i].src});`;
     productDiv.appendChild(imageContainer);
 
     let productName = document.createElement("p");

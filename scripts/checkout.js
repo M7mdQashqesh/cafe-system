@@ -90,12 +90,12 @@ function completeOrder(fullName, phoneNumber, address) {
 
     allTextMessage = userInfo + allTextMessage;
     url += encodeURIComponent(allTextMessage);
-    window.open(url, "_blank").focus();
     window.localStorage.removeItem("cartProducts");
     showToastify(
       "Order Sent Successfully",
       "linear-gradient(to right, #00b09b, #96c93d)"
     );
+    window.open(url, "_blank").focus();
     window.location.href = "../index.html";
   } else {
     showToastify(

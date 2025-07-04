@@ -92,20 +92,23 @@ header i {
   padding: 0;
   margin-top: 30px;
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 35px 10px;
 }
 
 .categories ul li a {
   padding: 8px 30px;
   font-size: 18px;
-  color: white;
-  background-color: var(--secondary-color);
-  border-radius: 5px;
+  color: #777;
+  border: 2px solid gray;
+  border-radius: 10px;
   font-weight: bold;
 }
 
 .categories ul li a.active {
-  background: linear-gradient(rgb(251 160 104), rgb(234 115 108));
+  background-color: white;
+  color: black;
+  border: 2px solid black;
 }
 /* Categories */
 
@@ -140,35 +143,33 @@ header i {
 }
 
 .varieties .product {
-  background-color: var(--secondary-color);
   overflow: hidden;
-  border-radius: 8px 8px 0 0;
-  position: relative;
+}
+
+.varieties .product .bg-image {
+  background-size: cover;
+  background-position: center;
+  aspect-ratio: 1/1;
+  border-radius: 15px;
 }
 
 .varieties .product .product-name {
   color: white;
   font-weight: bold;
-  margin: 20px 5px 0px 10px;
   line-height: 1.4;
 }
 
 .varieties .product .description {
   color: #777;
-  margin: 20px 5px 60px 10px;
   font-size: 12px;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.4;
 }
 
 .varieties .product .product-price {
-  background: linear-gradient(rgb(192 17 114), rgb(234 115 108));
-  position: absolute;
-  right: -5px;
-  bottom: -29px;
-  border-radius: 50%;
-  padding: 18px 10px;
   color: white;
   font-weight: bold;
 }
