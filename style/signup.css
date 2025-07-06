@@ -18,28 +18,29 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.login-container {
+.signup-container {
   background-color: white;
   padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
   width: 100%;
 }
 
-.login-container h2 {
-  margin-bottom: 20px;
+.signup-container h2 {
+  margin-bottom: 24px;
   text-align: center;
   color: #333;
 }
 
 .input-group {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .input-group label {
   display: block;
-  margin-bottom: 5px;
-  color: #555;
+  margin-bottom: 6px;
+  color: #444;
+  font-weight: 500;
 }
 
 .input-group input {
@@ -47,26 +48,27 @@ body {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  transition: border-color 0.3s;
+  transition: 0.3s ease border-color;
 }
 
 .input-group input:focus {
-  border-color: #4facfe;
+  border-color: #43e97b;
   outline: none;
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  background-color: #4facfe;
+  padding: 14px;
+  background-color: #43e97b;
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 17px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: 0.3s background-color;
 }
 
 button:hover {
-  background-color: #00c2fe;
+  background-color: #38cc8c;
 }

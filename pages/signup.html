@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Title Tag -->
-    <title>Login Page</title>
+    <title>Sign Up</title>
+
     <!-- Toastify Library -->
     <link
       rel="stylesheet"
@@ -13,21 +14,21 @@
       href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
     />
     <!-- Main CSS File -->
-    <link rel="stylesheet" href="../style/style.css">
-    <!-- Login CSS File -->
-    <link rel="stylesheet" href="../style/login.css" />
+    <link rel="stylesheet" href="../style/style.css" />
+    <!-- Signup CSS File -->
+    <link rel="stylesheet" href="../style/signup.css" />
   </head>
   <body>
     <div class="container">
-      <div class="login-container">
-        <h2>Login</h2>
+      <div class="signup-container">
+        <h2>Create Account</h2>
         <form>
           <div class="input-group">
             <label for="email">Email</label>
             <input
-              type="text"
+              type="email"
               id="email"
-              placeholder="Enter email"
+              placeholder="Enter your email"
               required
             />
           </div>
@@ -36,11 +37,20 @@
             <input
               type="password"
               id="password"
-              placeholder="Enter password"
+              placeholder="Create a password"
               required
             />
           </div>
-          <button type="submit">Login</button>
+          <div class="input-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input
+              type="password"
+              id="confirm-password"
+              placeholder="Repeat a password"
+              required
+            />
+          </div>
+          <button type="submit">Sign Up</button>
         </form>
       </div>
     </div>
@@ -50,7 +60,7 @@
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/toastify-js"
     ></script>
-    <!-- Login JavaScript File -->
-    <script src="../scripts/login.js" type="module"></script>
+    <!-- Signup JavaScript File -->
+    <script src="../scripts/signup.js" type="module"></script>
   </body>
 </html>
