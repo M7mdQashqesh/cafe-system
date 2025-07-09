@@ -1,10 +1,16 @@
+import { auth } from "./firebase.js";
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
 let loginForm = document.querySelector("form");
 
-loginForm.addEventListener("submit", function (e) {
+loginForm.addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  let email = document.querySelector("#username").value.trim();
-  let password = document.querySelector("#password").value.trim();
+  let emailInput = document.querySelector("#email");
+  let email = emailInput.value.trim();
+
+  let passwordInput = document.querySelector("#password");
+  let password = passwordInput.value.trim();
 
   if (!email || !password) {
     // Notification
@@ -41,5 +47,40 @@ loginForm.addEventListener("submit", function (e) {
     }).showToast();
 
     return;
+  }
+
+  try {
+    let userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    window.localStorage.setItem(
+      "user",
+      JSON.stringify(userCredential.user.email)
+    );
+
+    // Notification
+    Toastify({
+      text: "Login Successfully",
+      duration: 3000,
+      gravity: "top",
+      position: "right",
+      stopOnFocus: false,
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      },
+      onClick: function () {},
+    }).showToast();
+
+    setTimeout(() => {
+      emailInput.value = "";
+      passwordInput.value = "";
+
+      // Note: change location to dashboard
+      window.location.href = "../index.html";
+    }, 500);
+  } catch (error) {
+    console.error("Filed To  Login: " + error);
   }
 });
