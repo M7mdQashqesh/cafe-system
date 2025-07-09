@@ -89,9 +89,20 @@ signupForm.addEventListener("submit", async function (e) {
       window.location.href = "../pages/login.html";
     }, 500);
   } catch (error) {
-    console.error("Filed To Signup: " + error);
+    console.error("Failed To Signup: ", error.code);
+
+    let message = "Signup failed, please try again.";
+
+    if (error.code === "auth/email-already-in-use") {
+      message = "This email is already registered.";
+    } else if (error.code === "auth/invalid-email") {
+      message = "Invalid email address.";
+    } else if (error.code === "auth/weak-password") {
+      message = "Password is too weak.";
+    }
+
     Toastify({
-      text: "Signup failed: " + error.message,
+      text: message,
       duration: 3000,
       gravity: "top",
       position: "right",

@@ -76,11 +76,9 @@ loginForm.addEventListener("submit", async function (e) {
     setTimeout(() => {
       emailInput.value = "";
       passwordInput.value = "";
-
-      // Note: change location to dashboard
-      window.location.href = "../index.html";
+      window.location.href = "../pages/dashboard/uploadProduct.html";
     }, 500);
   } catch (error) {
-    console.error("Filed To  Login: " + error);
+    console.error("Failed To  Login: " + error);
   }
 });
