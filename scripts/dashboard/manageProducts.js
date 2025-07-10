@@ -1,8 +1,9 @@
 import { firestore } from "../firebase.js";
 import {
-  doc,
   getDocs,
   collection,
+  doc,
+  deleteDoc,
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 let loggedUser = JSON.parse(window.localStorage.getItem("user"));
@@ -72,8 +73,9 @@ async function getData() {
 }
 
 function createProductDiv(productInfo) {
-  let product = `
-    <div class="product-div" >
+  let product = document.createElement("div");
+  product.className = "product-div";
+  product.innerHTML = `
       <div class="product-image" style="background-image: url(${productInfo.productImage});"></div>
       <div class="details">
         <div class="name-and-trash">
@@ -83,7 +85,69 @@ function createProductDiv(productInfo) {
         <p class="description">${productInfo.productDescription}</p>
         <p class="price">${productInfo.productPrice} ₪</p>
       </div>
-    </div>
   `;
-  mainDiv.innerHTML += product;
+  mainDiv.appendChild(product);
+
+  // Delete Product from firestore and from page
+  let trash = product.querySelector(".fa-trash");
+  trash.addEventListener("click", async function () {
+    confirmDelete(product, productInfo);
+  });
+}
+
+function confirmDelete(product, productInfo) {
+  let model = document.createElement("div");
+  model.className = "delete-model";
+  model.innerHTML = `
+  <div>
+    <p>Are You Sure To Delete This Product?<b>${productInfo.productName}</b></p>
+    <div>
+      <button class="delete-btn">Delete</button>
+      <button class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+`;
+  mainDiv.appendChild(model);
+
+  model
+    .querySelector(".delete-btn")
+    .addEventListener("click", async function () {
+      try {
+        const useRef = doc(firestore, "products", productInfo.productName);
+
+        await deleteDoc(useRef);
+        product.remove();
+        model.remove();
+
+        showToast(
+          "Delete Product Successfully",
+          "linear-gradient(to right, #00b09b, #96c93d)"
+        );
+        const querySnapshot = await getDocs(collection(firestore, "products"));
+        if (querySnapshot.size === 0) {
+          mainDiv.innerHTML = `<p class="empty-products">You Have Not Added Any Product</p>`;
+        }
+      } catch (error) {
+        console.error("Failed To Delete Product: ", error);
+        showToast(error.message, "linear-gradient(to right, #ff416c, #ff4b2b)");
+      }
+    });
+
+  model.querySelector(".cancel-btn").addEventListener("click", function () {
+    model.remove();
+  });
+}
+
+function showToast(message, background) {
+  Toastify({
+    text: message,
+    duration: 3000,
+    gravity: "top",
+    position: "right",
+    stopOnFocus: false,
+    style: {
+      background: background,
+    },
+    onClick: function () {},
+  }).showToast();
 }

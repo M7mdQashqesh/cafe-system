@@ -1,6 +1,10 @@
 import { auth } from "./firebase.js";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
+if (JSON.parse(window.localStorage.getItem("user"))) {
+  window.location.href = "../pages/dashboard/uploadProduct.html";
+}
+
 let loginForm = document.querySelector("form");
 
 loginForm.addEventListener("submit", async function (e) {
@@ -13,19 +17,10 @@ loginForm.addEventListener("submit", async function (e) {
   let password = passwordInput.value.trim();
 
   if (!email || !password) {
-    // Notification
-    Toastify({
-      text: "All fields are required",
-      duration: 3000,
-      gravity: "top",
-      position: "right",
-      stopOnFocus: false,
-      style: {
-        background: "linear-gradient(to right, #ff416c, #ff4b2b)",
-      },
-      onClick: function () {},
-    }).showToast();
-
+    showToast(
+      "All fields are required",
+      "linear-gradient(to right, #ff416c, #ff4b2b)"
+    );
     return;
   }
 
@@ -33,19 +28,10 @@ loginForm.addEventListener("submit", async function (e) {
     !email.match(/^[\w.-]+@[\w.-]+\.\w{2,10}$/) ||
     !password.match(/^(?=.*?[0-9])(?=.*?[A-Za-z]).{8,32}$/)
   ) {
-    // Notification
-    Toastify({
-      text: "Email or password are wrong, please login again",
-      duration: 3000,
-      gravity: "top",
-      position: "right",
-      stopOnFocus: false,
-      style: {
-        background: "linear-gradient(to right, #ff416c, #ff4b2b)",
-      },
-      onClick: function () {},
-    }).showToast();
-
+    showToast(
+      "Email or password are wrong, please login again",
+      "linear-gradient(to right, #ff416c, #ff4b2b)"
+    );
     return;
   }
 
@@ -60,18 +46,10 @@ loginForm.addEventListener("submit", async function (e) {
       JSON.stringify(userCredential.user.email)
     );
 
-    // Notification
-    Toastify({
-      text: "Login Successfully",
-      duration: 3000,
-      gravity: "top",
-      position: "right",
-      stopOnFocus: false,
-      style: {
-        background: "linear-gradient(to right, #00b09b, #96c93d)",
-      },
-      onClick: function () {},
-    }).showToast();
+    showToast(
+      "Login Successfully",
+      "linear-gradient(to right, #00b09b, #96c93d)"
+    );
 
     setTimeout(() => {
       emailInput.value = "";
@@ -82,3 +60,17 @@ loginForm.addEventListener("submit", async function (e) {
     console.error("Failed To  Login: " + error);
   }
 });
+
+function showToast(message, background) {
+  Toastify({
+    text: message,
+    duration: 3000,
+    gravity: "top",
+    position: "right",
+    stopOnFocus: false,
+    style: {
+      background: background,
+    },
+    onClick: function () {},
+  }).showToast();
+}
