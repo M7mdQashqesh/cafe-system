@@ -41,6 +41,17 @@ menuNav.addEventListener("click", function (e) {
   }
 });
 
+let list = document.querySelectorAll("nav ul li");
+list.forEach((el) => {
+  el.addEventListener("click", function (e) {
+    if (el.children[1].textContent === "Manage Products") {
+      window.location.href = "../../pages/dashboard/manageProducts.html";
+    } else if (el.children[1].textContent === "Delete Product") {
+      window.location.href = "../../pages/dashboard/deleteProduct.html";
+    }
+  });
+});
+
 let confirmForm = document.querySelector("form");
 confirmForm.addEventListener("submit", uploadAndValidateForm);
 
@@ -66,16 +77,16 @@ async function uploadAndValidateForm(e) {
     return;
   }
 
-  const driveImageRegex =
-    /^https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=(?:view|download)&id=)[\w-]{25,}/;
+  // const driveImageRegex =
+  //   /^https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=(?:view|download)&id=)[\w-]{25,}/;
 
-  if (!productImage.match(driveImageRegex)) {
-    showToastify(
-      "Please, Enter Valid Product Image Link (Google Drive Link)",
-      "linear-gradient(to right, #ff416c, #ff4b2b)"
-    );
-    return;
-  }
+  // if (!productImage.match(driveImageRegex)) {
+  //   showToastify(
+  //     "Please, Enter Valid Product Image Link (Google Drive Link)",
+  //     "linear-gradient(to right, #ff416c, #ff4b2b)"
+  //   );
+  //   return;
+  // }
 
   // Full name should be contain only characters and space
   if (!productName.match(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)) {
