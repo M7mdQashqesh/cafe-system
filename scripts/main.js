@@ -3,6 +3,11 @@ cart.addEventListener("click", function () {
   window.location.href = "../pages/cart.html";
 });
 
+let loginBtn = document.querySelector(".fa-right-to-bracket");
+loginBtn.addEventListener("click", function () {
+  window.location.href = "../pages/login.html";
+});
+
 // Get Data From JSON Files
 async function getData(link, place) {
   let productsArea = document.querySelector(`.varieties .${place} .products`);
@@ -16,7 +21,7 @@ async function getData(link, place) {
     productDiv.className = "product";
 
     let imageContainer = document.createElement("div");
-    imageContainer.className = "bg-image"
+    imageContainer.className = "bg-image";
     imageContainer.style.cssText = `background-image: url(${allData[i].src});`;
     productDiv.appendChild(imageContainer);
 

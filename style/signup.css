@@ -32,6 +32,12 @@ body {
   color: #333;
 }
 
+.signup-container > a {
+  color: blue;
+  display: block;
+  margin: 20px auto 0;
+}
+
 .input-group {
   margin-bottom: 18px;
 }

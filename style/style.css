@@ -71,6 +71,11 @@ nav ul {
   padding: 0;
 }
 
+nav.header-icons ul {
+  display: flex;
+  align-items: center;
+}
+
 header i {
   padding: 5px 10px;
   border-radius: 5px;

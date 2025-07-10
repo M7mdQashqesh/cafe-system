@@ -2,6 +2,8 @@ import { auth, firestore } from "./firebase.js";
 import {
   doc,
   setDoc,
+  getDocs,
+  collection,
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
@@ -18,18 +20,10 @@ signupForm.addEventListener("submit", async function (e) {
   let confirmPassword = confirmInput.value.trim();
 
   if (!email || !password || !confirmPassword) {
-    // Notification
-    Toastify({
-      text: "All fields are required",
-      duration: 3000,
-      gravity: "top",
-      position: "right",
-      stopOnFocus: false,
-      style: {
-        background: "linear-gradient(to right, #ff416c, #ff4b2b)",
-      },
-      onClick: function () {},
-    }).showToast();
+    showToastify(
+      "All fields are required",
+      "linear-gradient(to right, #ff416c, #ff4b2b)"
+    );
 
     return;
   }
@@ -39,23 +33,26 @@ signupForm.addEventListener("submit", async function (e) {
     !password.match(/^(?=.*?[0-9])(?=.*?[A-Za-z]).{8,32}$/) ||
     password !== confirmPassword
   ) {
-    // Notification
-    Toastify({
-      text: "Wrong in email or password, please try again",
-      duration: 3000,
-      gravity: "top",
-      position: "right",
-      stopOnFocus: false,
-      style: {
-        background: "linear-gradient(to right, #ff416c, #ff4b2b)",
-      },
-      onClick: function () {},
-    }).showToast();
+    showToastify(
+      "Wrong in email or password, please try again",
+      "linear-gradient(to right, #ff416c, #ff4b2b)"
+    );
 
     return;
   }
 
   try {
+    const signedUpUserRef = collection(firestore, "users");
+    const snapshot = await getDocs(signedUpUserRef);
+
+    if (snapshot.size !== 0) {
+      showToastify(
+        "Cannot Create another account, There is a registered account",
+        "linear-gradient(to right, #ff416c, #ff4b2b)"
+      );
+      return;
+    }
+
     let userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -63,24 +60,17 @@ signupForm.addEventListener("submit", async function (e) {
     );
     const userId = userCredential.user.uid;
     const useRef = doc(firestore, "users", userId);
+
     await setDoc(useRef, {
       userId: userId,
       email: email,
       createdAt: new Date().toISOString(),
     });
 
-    // Notification
-    Toastify({
-      text: "Account Created Successfully",
-      duration: 3000,
-      gravity: "top",
-      position: "right",
-      stopOnFocus: false,
-      style: {
-        background: "linear-gradient(to right, #00b09b, #96c93d)",
-      },
-      onClick: function () {},
-    }).showToast();
+    showToastify(
+      "Account Created Successfully",
+      "linear-gradient(to right, #00b09b, #96c93d)"
+    );
 
     setTimeout(() => {
       emailInput.value = "";
@@ -101,15 +91,21 @@ signupForm.addEventListener("submit", async function (e) {
       message = "Password is too weak.";
     }
 
-    Toastify({
-      text: message,
-      duration: 3000,
-      gravity: "top",
-      position: "right",
-      stopOnFocus: false,
-      style: {
-        background: "linear-gradient(to right, #ff416c, #ff4b2b)",
-      },
-    }).showToast();
+    showToastify(message, "linear-gradient(to right, #ff416c, #ff4b2b)");
   }
 });
+
+function showToastify(text, background) {
+  // Notification
+  Toastify({
+    text: text,
+    duration: 3000,
+    gravity: "top",
+    position: "right",
+    stopOnFocus: false,
+    style: {
+      background: background,
+    },
+    onClick: function () {},
+  }).showToast();
+}
