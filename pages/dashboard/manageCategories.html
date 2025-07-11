@@ -78,7 +78,10 @@
       <p>Manage Categories</p>
 
       <!-- Main -->
-      <main></main>
+      <main>
+        <button id="add-category-btn">Add Category</button>
+        <div class="categories"></div>
+      </main>
       <!-- Main -->
 
       <!-- Loading -->
@@ -86,6 +89,26 @@
         <i class="fa-solid fa-spinner"></i>
       </div>
       <!-- Loading -->
+
+      <!-- Add Category Modal -->
+      <div class="modal" style="display: none;">
+        <form>
+          <div>
+            <label for="category-name">Category Name</label>
+            <input
+              type="text"
+              id="category-name"
+              name="categoryName"
+              required
+            />
+          </div>
+          <div class="btns">
+            <input type="submit" value="Add Category" />
+            <button class="cancel-btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <!-- Add Category Modal -->
     </div>
 
     <!-- Toastify Library -->
