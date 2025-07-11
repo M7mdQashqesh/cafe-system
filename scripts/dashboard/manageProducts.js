@@ -44,7 +44,6 @@ menuNav.addEventListener("click", function (e) {
 });
 
 let list = document.querySelectorAll("nav ul li:not(:first-of-type)");
-console.log(list);
 list.forEach((el) => {
   el.addEventListener("click", function (e) {
     if (el.children[1].textContent === "Upload Products") {
@@ -64,6 +63,7 @@ let mainDiv = document.querySelector("main");
 
 getData();
 async function getData() {
+  document.getElementById("loading").style.display = "block";
   try {
     const querySnapshot = await getDocs(collection(firestore, "products"));
     if (querySnapshot.size > 0) {
@@ -75,6 +75,8 @@ async function getData() {
     }
   } catch (error) {
     console.error("Failed To Fetch Data: ", error);
+  } finally {
+    document.getElementById("loading").style.display = "none";
   }
 }
 
