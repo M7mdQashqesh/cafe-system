@@ -41,13 +41,18 @@ menuNav.addEventListener("click", function (e) {
   }
 });
 
-let list = document.querySelectorAll("nav ul li");
+let list = document.querySelectorAll("nav ul li:not(:first-of-type)");
 list.forEach((el) => {
   el.addEventListener("click", function (e) {
     if (el.children[1].textContent === "Manage Products") {
       window.location.href = "../../pages/dashboard/manageProducts.html";
     } else if (el.children[1].textContent === "Delete Product") {
       window.location.href = "../../pages/dashboard/deleteProduct.html";
+    } else if (el.children[1].textContent === "Home Page") {
+      window.location.href = "../../index.html";
+    } else if (el.children[1].textContent === "Sign out") {
+      window.localStorage.removeItem("user");
+      window.location.href = "../../pages/login.html";
     }
   });
 });

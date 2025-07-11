@@ -3,10 +3,20 @@ cart.addEventListener("click", function () {
   window.location.href = "../pages/cart.html";
 });
 
-let loginBtn = document.querySelector(".fa-right-to-bracket");
-loginBtn.addEventListener("click", function () {
-  window.location.href = "../pages/login.html";
-});
+let loginBtn = document.getElementById("login-btn");
+let dashboardBtn = document.getElementById("dashboard-btn");
+
+if (JSON.parse(window.localStorage.getItem("user"))) {
+  loginBtn.remove();
+  dashboardBtn.addEventListener("click", function () {
+    window.location.href = "../pages/dashboard/uploadProduct.html";
+  });
+} else {
+  dashboardBtn.remove();
+  loginBtn.addEventListener("click", function () {
+    window.location.href = "../pages/login.html";
+  });
+}
 
 // Get Data From JSON Files
 async function getData(link, place) {
