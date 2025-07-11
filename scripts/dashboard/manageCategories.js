@@ -1,0 +1,71 @@
+import { firestore } from "../firebase.js";
+import {
+  getDocs,
+  collection,
+  doc,
+  deleteDoc,
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+let loggedUser = JSON.parse(window.localStorage.getItem("user"));
+
+if (!loggedUser) {
+  window.location.href = "../../pages/login.html";
+}
+
+let menuBtn = document.querySelector(".fa-bars");
+let menuNav = document.querySelector("nav");
+let ul = document.querySelector("ul");
+
+menuBtn.addEventListener("click", function () {
+  menuNav.classList.add("show");
+  ul.classList.add("show");
+
+  menuNav.classList.remove("hide");
+  ul.classList.remove("hide");
+
+  // prevent scroll
+  document.body.style.overflow = "hidden";
+});
+
+menuNav.addEventListener("click", function (e) {
+  if (
+    e.target === menuNav ||
+    e.target === document.querySelector(".fa-xmark")
+  ) {
+    menuNav.classList.remove("show");
+    ul.classList.remove("show");
+
+    menuNav.classList.add("hide");
+    ul.classList.add("hide");
+
+    // allow scroll
+    document.body.style.overflow = "auto";
+  }
+});
+
+let list = document.querySelectorAll("nav ul li:not(:first-of-type)");
+list.forEach((el) => {
+  el.addEventListener("click", function () {
+    if (el.children[1].textContent === "Upload Products") {
+      window.location.href = "../../pages/dashboard/uploadProduct.html";
+    } else if (el.children[1].textContent === "Manage Products") {
+      window.location.href = "../../pages/dashboard/manageProducts.html";
+    } else if (el.children[1].textContent === "Delete Product") {
+      window.location.href = "../../pages/dashboard/deleteProduct.html";
+    } else if (el.children[1].textContent === "Manage Categories") {
+      menuNav.classList.remove("show");
+      ul.classList.remove("show");
+
+      menuNav.classList.add("hide");
+      ul.classList.add("hide");
+
+      // allow scroll
+      document.body.style.overflow = "auto";
+    } else if (el.children[1].textContent === "Home Page") {
+      window.location.href = "../../index.html";
+    } else if (el.children[1].textContent === "Sign out") {
+      window.localStorage.removeItem("user");
+      window.location.href = "../../pages/login.html";
+    }
+  });
+});

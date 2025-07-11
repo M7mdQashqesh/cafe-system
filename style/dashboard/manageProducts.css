@@ -104,7 +104,6 @@ nav ul li p {
   color: black;
 }
 
-/* Main Section */
 .container > p {
   color: white;
   font-size: 40px;
@@ -112,6 +111,7 @@ nav ul li p {
   padding: 0;
 }
 
+/* Main Section */
 .product-div {
   display: flex;
   justify-content: space-between;

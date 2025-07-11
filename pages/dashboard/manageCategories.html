@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Title Tag -->
     <title>Document</title>
-
     <!-- Font Awesome Library -->
     <link
       rel="stylesheet"
@@ -23,8 +22,8 @@
     />
     <!-- Main CSS File -->
     <link rel="stylesheet" href="../../style/style.css" />
-    <!-- Upload Product CSS File -->
-    <link rel="stylesheet" href="../../style/dashboard/uploadProduct.css" />
+    <!-- Manage Categories CSS File -->
+    <link rel="stylesheet" href="../../style/dashboard/manageCategories.css" />
   </head>
   <body>
     <div class="container">
@@ -42,7 +41,7 @@
             </li>
             <li>
               <i class="fa-solid fa-upload"></i>
-              <p>Upload Product</p>
+              <p>Upload Products</p>
             </li>
             <li>
               <i class="fa-solid fa-bars-progress"></i>
@@ -76,39 +75,17 @@
       </header>
       <!-- Header -->
 
-      <p>Upload Product</p>
+      <p>Manage Categories</p>
 
       <!-- Main -->
-      <main>
-        <form>
-          <div>
-            <label for="product-image">Product Image Link</label>
-            <input type="url" name="productImage" id="product-image" required />
-          </div>
-          <div>
-            <label for="product-name">Product Name</label>
-            <input type="text" name="productName" id="product-name" required />
-          </div>
-          <div>
-            <label for="product-description">Product Description</label>
-            <textarea
-              name="productDescription"
-              id="product-description"
-            ></textarea>
-          </div>
-          <div>
-            <label for="product-price">Product Price</label>
-            <input
-              type="number"
-              name="productPrice"
-              id="product-price"
-              required
-            />
-          </div>
-          <button>Upload Product</button>
-        </form>
-      </main>
+      <main></main>
       <!-- Main -->
+
+      <!-- Loading -->
+      <div id="loading">
+        <i class="fa-solid fa-spinner"></i>
+      </div>
+      <!-- Loading -->
     </div>
 
     <!-- Toastify Library -->
@@ -116,9 +93,9 @@
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/toastify-js"
     ></script>
-    <!-- Upload Product JavaScript File -->
+    <!-- Manage Categories JavaScriptFile -->
     <script
-      src="../../scripts/dashboard/uploadProduct.js"
+      src="../../scripts/dashboard/manageCategories.js"
       type="module"
     ></script>
   </body>

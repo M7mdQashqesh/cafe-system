@@ -43,11 +43,22 @@ menuNav.addEventListener("click", function (e) {
 
 let list = document.querySelectorAll("nav ul li:not(:first-of-type)");
 list.forEach((el) => {
-  el.addEventListener("click", function (e) {
-    if (el.children[1].textContent === "Manage Products") {
+  el.addEventListener("click", function () {
+    if (el.children[1].textContent === "Upload Product") {
+      menuNav.classList.remove("show");
+      ul.classList.remove("show");
+
+      menuNav.classList.add("hide");
+      ul.classList.add("hide");
+
+      // allow scroll
+      document.body.style.overflow = "auto";
+    } else if (el.children[1].textContent === "Manage Products") {
       window.location.href = "../../pages/dashboard/manageProducts.html";
     } else if (el.children[1].textContent === "Delete Product") {
       window.location.href = "../../pages/dashboard/deleteProduct.html";
+    } else if (el.children[1].textContent === "Manage Categories") {
+      window.location.href = "../../pages/dashboard/manageCategories.html";
     } else if (el.children[1].textContent === "Home Page") {
       window.location.href = "../../index.html";
     } else if (el.children[1].textContent === "Sign out") {
