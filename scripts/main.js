@@ -24,68 +24,49 @@ if (JSON.parse(window.localStorage.getItem("user"))) {
   });
 }
 
-/* 
-  // Get Data From JSON Files
-  async function getData(link, place) {
-    let productsArea = document.querySelector(`.varieties .${place} .products`);
-
-    let allData = await fetch(link);
-    allData = await allData.json();
-
-    // Create Products Card
-    for (let i = 0; i < allData.length; i++) {
-      let productDiv = document.createElement("div");
-      productDiv.className = "product";
-
-      let imageContainer = document.createElement("div");
-      imageContainer.className = "bg-image";
-      imageContainer.style.cssText = `background-image: url(${allData[i].src});`;
-      productDiv.appendChild(imageContainer);
-
-      let productName = document.createElement("p");
-      productName.className = "product-name";
-      productName.textContent = allData[i].name;
-      productDiv.appendChild(productName);
-
-      let description = document.createElement("p");
-      description.className = "description";
-      description.textContent = allData[i].description;
-      productDiv.appendChild(description);
-
-      let productPrice = document.createElement("p");
-      productPrice.className = "product-price";
-      productPrice.textContent = `${allData[i].price} ₪`;
-      productDiv.appendChild(productPrice);
-
-      // Save selected product details in localStorage and redirect to the product details page
-      productDiv.addEventListener("click", function () {
-        let pDetails = {
-          src: allData[i].src,
-          name: allData[i].name,
-          description: allData[i].description,
-          price: allData[i].price,
-        };
-        window.localStorage.setItem("productDetails", JSON.stringify(pDetails));
-        window.location.href = "../pages/productDetails.html";
-      });
-
-      productsArea.appendChild(productDiv);
-    }
-  }
-  getData("../jsons/drinks.json", "drinks");
-  getData("../jsons/sweets.json", "sweets");
-*/
-
 async function getCategories() {
+  document.querySelector("main").style.display = "none";
+  document.getElementById("loading").style.display = "block";
   try {
     let useRef = collection(firestore, "categories");
     let querySnapshot = await getDocs(useRef);
     querySnapshot.forEach((doc) => {
       createCategoriesList(doc.data());
+      getProducts(doc.data());
     });
   } catch (error) {
     console.error("Error fetching categories:", error);
+  } finally {
+    document.querySelector("main").style.display = "block";
+    document.getElementById("loading").style.display = "none";
   }
+}
+getCategories();
+
+let ulList = document.getElementById("categoryList");
+async function createCategoriesList(category) {
+  const useRef = collection(firestore, category.categoryName);
+  const querySnapshot = await getDocs(useRef);
+  if (querySnapshot.size === 0) return;
+
+  let li = document.createElement("li");
+  li.textContent = category.categoryName;
+  ulList.appendChild(li);
+
+  let varietiesArea = document.getElementById("varieties");
+
+  let categoryContainer = document.createElement("div");
+  categoryContainer.className = category.categoryName;
+
+  let categoryTitle = document.createElement("p");
+  categoryTitle.textContent = category.categoryName;
+  categoryContainer.appendChild(categoryTitle);
+
+  let categoryProducts = document.createElement("div");
+  categoryProducts.className = "products";
+  categoryContainer.appendChild(categoryProducts);
+
+  varietiesArea.appendChild(categoryContainer);
 
   // Change Active Category
   let listOfCategories = document.querySelectorAll("#categoryList li");
@@ -98,18 +79,57 @@ async function getCategories() {
     });
   });
 }
-getCategories();
 
-let ulList = document.getElementById("categoryList");
-function createCategoriesList(category) {
-  let li = document.createElement("li");
-  li.textContent = category.categoryName;
-  ulList.appendChild(li);
-}
-
-async function getProducts() {
+// Get Data From Firestore depend on Categories
+async function getProducts(categories) {
   try {
-    
+    const useRef = collection(firestore, categories.categoryName);
+    const querySnapshot = await getDocs(useRef);
+
+    let productsArea = document.querySelector(
+      `.varieties .${categories.categoryName} .products`
+    );
+
+    querySnapshot.forEach((doc) => {
+      let productDiv = document.createElement("div");
+      productDiv.className = "product";
+
+      let imageContainer = document.createElement("div");
+      imageContainer.className = "bg-image";
+      imageContainer.style.cssText = `background-image: url(${
+        doc.data().productImage
+      });`;
+      productDiv.appendChild(imageContainer);
+
+      let productName = document.createElement("p");
+      productName.className = "product-name";
+      productName.textContent = doc.data().productName;
+      productDiv.appendChild(productName);
+
+      let description = document.createElement("p");
+      description.className = "description";
+      description.textContent = doc.data().productDescription;
+      productDiv.appendChild(description);
+
+      let productPrice = document.createElement("p");
+      productPrice.className = "product-price";
+      productPrice.textContent = `${doc.data().productPrice} ₪`;
+      productDiv.appendChild(productPrice);
+
+      // Save selected product details in localStorage and redirect to the product details page
+      productDiv.addEventListener("click", function () {
+        let pDetails = {
+          src: doc.data().productImage,
+          name: doc.data().productName,
+          description: doc.data().productDescription,
+          price: doc.data().productPrice,
+        };
+        window.localStorage.setItem("productDetails", JSON.stringify(pDetails));
+        window.location.href = "../pages/productDetails.html";
+      });
+
+      productsArea.appendChild(productDiv);
+    });
   } catch (error) {
     console.error("Error fetching products:", error);
   }

@@ -2,6 +2,8 @@ import { firestore } from "../firebase.js";
 import {
   doc,
   setDoc,
+  getDocs,
+  collection,
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 let loggedUser = JSON.parse(window.localStorage.getItem("user"));
@@ -66,6 +68,23 @@ list.forEach((el) => {
   });
 });
 
+let productCategoriesDiv = document.getElementById("product-categories");
+async function getCategories() {
+  try {
+    const useRef = collection(firestore, "categories");
+    let querySnapshot = await getDocs(useRef);
+    querySnapshot.forEach((doc) => {
+      let selectOption = document.createElement("option");
+      selectOption.value = doc.data().categoryName;
+      selectOption.textContent = doc.data().categoryName;
+      productCategoriesDiv.appendChild(selectOption);
+    });
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+  }
+}
+getCategories();
+
 let confirmForm = document.querySelector("form");
 confirmForm.addEventListener("submit", uploadAndValidateForm);
 
@@ -77,30 +96,27 @@ async function uploadAndValidateForm(e) {
   let productNameInput = document.getElementById("product-name");
   let productDescriptionInput = document.getElementById("product-description");
   let productPriceInput = document.getElementById("product-price");
+  let productCategoriesInput = document.getElementById("product-categories");
 
   let productImage = productImageInput.value.trim();
   let productName = productNameInput.value.trim();
   let productDescription = productDescriptionInput.value.trim();
   let productPrice = parseInt(productPriceInput.value.trim());
+  let productCategories = productCategoriesInput.value;
 
-  if (!productImage || !productName || !productDescription || !productPrice) {
+  if (
+    !productImage ||
+    !productName ||
+    !productDescription ||
+    !productPrice ||
+    !productCategories
+  ) {
     showToastify(
       "All Fields Are Required",
       "linear-gradient(to right, #ff416c, #ff4b2b)"
     );
     return;
   }
-
-  // const driveImageRegex =
-  //   /^https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=(?:view|download)&id=)[\w-]{25,}/;
-
-  // if (!productImage.match(driveImageRegex)) {
-  //   showToastify(
-  //     "Please, Enter Valid Product Image Link (Google Drive Link)",
-  //     "linear-gradient(to right, #ff416c, #ff4b2b)"
-  //   );
-  //   return;
-  // }
 
   // Full name should be contain only characters and space
   if (!productName.match(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)) {
@@ -120,7 +136,7 @@ async function uploadAndValidateForm(e) {
   }
 
   try {
-    let useRef = doc(firestore, "products", productName);
+    let useRef = doc(firestore, productCategories, productName);
     await setDoc(useRef, {
       productImage,
       productName,

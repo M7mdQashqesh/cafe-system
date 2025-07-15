@@ -179,3 +179,23 @@ header i {
   font-weight: bold;
 }
 /* Varieties */
+
+/* Loading */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#loading {
+  color: white;
+  font-size: 40px;
+  width: fit-content;
+  margin: 65% auto 0;
+  animation: spin 1s linear infinite;
+}
+
+/* Loading */

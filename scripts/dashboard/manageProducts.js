@@ -70,16 +70,30 @@ list.forEach((el) => {
 
 let mainDiv = document.querySelector("main");
 
-getData();
-async function getData() {
+async function getCategories() {
+  try {
+    const useRef = collection(firestore, "categories");
+    let querySnapshot = await getDocs(useRef);
+    querySnapshot.forEach((doc) => {
+      getData(doc.data());
+    });
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+  }
+}
+getCategories();
+
+async function getData(categoryDoc) {
   document.getElementById("loading").style.display = "block";
   try {
-    const querySnapshot = await getDocs(collection(firestore, "products"));
+    const querySnapshot = await getDocs(
+      collection(firestore, categoryDoc.categoryName)
+    );
     if (querySnapshot.size > 0) {
       querySnapshot.forEach((doc) => {
-        createProductDiv(doc.data());
+        createProductDiv(doc.data(), categoryDoc.categoryName);
       });
-    } else {
+    } else if (querySnapshot.size > 0 && mainDiv.innerHTML === "") {
       mainDiv.innerHTML = `<p class="empty-products">You Have Not Added Any Product</p>`;
     }
   } catch (error) {
@@ -89,7 +103,7 @@ async function getData() {
   }
 }
 
-function createProductDiv(productInfo) {
+function createProductDiv(productInfo, productCollection) {
   let product = document.createElement("div");
   product.className = "product-div";
   product.innerHTML = `
@@ -108,11 +122,11 @@ function createProductDiv(productInfo) {
   // Delete Product from firestore and from page
   let trash = product.querySelector(".fa-trash");
   trash.addEventListener("click", async function () {
-    confirmDelete(product, productInfo);
+    confirmDelete(product, productInfo, productCollection);
   });
 }
 
-function confirmDelete(product, productInfo) {
+function confirmDelete(product, productInfo, productCollection) {
   let model = document.createElement("div");
   model.className = "delete-model";
   model.innerHTML = `
@@ -130,7 +144,11 @@ function confirmDelete(product, productInfo) {
     .querySelector(".delete-btn")
     .addEventListener("click", async function () {
       try {
-        const useRef = doc(firestore, "products", productInfo.productName);
+        const useRef = doc(
+          firestore,
+          productCollection,
+          productInfo.productName
+        );
 
         await deleteDoc(useRef);
         product.remove();
@@ -141,7 +159,7 @@ function confirmDelete(product, productInfo) {
           "linear-gradient(to right, #00b09b, #96c93d)"
         );
         const querySnapshot = await getDocs(collection(firestore, "products"));
-        if (querySnapshot.size === 0) {
+        if (querySnapshot.size === 0 && mainDiv.innerHTML === "") {
           mainDiv.innerHTML = `<p class="empty-products">You Have Not Added Any Product</p>`;
         }
       } catch (error) {
