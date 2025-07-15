@@ -55,8 +55,6 @@ list.forEach((el) => {
       document.body.style.overflow = "auto";
     } else if (el.children[1].textContent === "Manage Products") {
       window.location.href = "../../pages/dashboard/manageProducts.html";
-    } else if (el.children[1].textContent === "Delete Product") {
-      window.location.href = "../../pages/dashboard/deleteProduct.html";
     } else if (el.children[1].textContent === "Manage Categories") {
       window.location.href = "../../pages/dashboard/manageCategories.html";
     } else if (el.children[1].textContent === "Home Page") {

@@ -51,8 +51,6 @@ list.forEach((el) => {
       window.location.href = "../../pages/dashboard/uploadProduct.html";
     } else if (el.children[1].textContent === "Manage Products") {
       window.location.href = "../../pages/dashboard/manageProducts.html";
-    } else if (el.children[1].textContent === "Delete Product") {
-      window.location.href = "../../pages/dashboard/deleteProduct.html";
     } else if (el.children[1].textContent === "Manage Categories") {
       menuNav.classList.remove("show");
       ul.classList.remove("show");

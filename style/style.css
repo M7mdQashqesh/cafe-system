@@ -101,7 +101,7 @@ header i {
   gap: 35px 10px;
 }
 
-.categories ul li a {
+.categories ul li {
   padding: 8px 30px;
   font-size: 18px;
   color: #777;
@@ -110,7 +110,7 @@ header i {
   font-weight: bold;
 }
 
-.categories ul li a.active {
+.categories ul li.active {
   background-color: white;
   color: black;
   border: 2px solid black;
