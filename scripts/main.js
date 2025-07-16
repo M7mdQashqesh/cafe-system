@@ -30,9 +30,13 @@ async function getCategories() {
   try {
     let useRef = collection(firestore, "categories");
     let querySnapshot = await getDocs(useRef);
-    querySnapshot.forEach((doc) => {
-      createCategoriesList(doc.data());
-      getProducts(doc.data());
+    querySnapshot.forEach(async (doc) => {
+      let varietyRef = collection(firestore, doc.data().categoryName);
+      let varietyQuerySnapshot = await getDocs(varietyRef);
+      if (varietyQuerySnapshot.size === 0) {
+        return;
+      }
+      createVarietiesArea(doc.data());
     });
   } catch (error) {
     console.error("Error fetching categories:", error);
@@ -43,20 +47,12 @@ async function getCategories() {
 }
 getCategories();
 
-let ulList = document.getElementById("categoryList");
-async function createCategoriesList(category) {
-  const useRef = collection(firestore, category.categoryName);
-  const querySnapshot = await getDocs(useRef);
-  if (querySnapshot.size === 0) return;
-
-  let li = document.createElement("li");
-  li.textContent = category.categoryName;
-  ulList.appendChild(li);
-
+function createVarietiesArea(category) {
   let varietiesArea = document.getElementById("varieties");
 
   let categoryContainer = document.createElement("div");
-  categoryContainer.className = category.categoryName;
+  let safeClass = `${category.categoryName.replace(/\s+/g, "-").toLowerCase()}`;
+  categoryContainer.className = safeClass;
 
   let categoryTitle = document.createElement("p");
   categoryTitle.textContent = category.categoryName;
@@ -68,26 +64,20 @@ async function createCategoriesList(category) {
 
   varietiesArea.appendChild(categoryContainer);
 
-  // Change Active Category
-  let listOfCategories = document.querySelectorAll("#categoryList li");
-  Array.from(listOfCategories).forEach((item) => {
-    item.addEventListener("click", function () {
-      Array.from(listOfCategories).forEach((li) => {
-        li.classList.remove("active");
-      });
-      item.classList.add("active");
-    });
-  });
+  getProducts(category);
 }
 
 // Get Data From Firestore depend on Categories
-async function getProducts(categories) {
+async function getProducts(category) {
   try {
-    const useRef = collection(firestore, categories.categoryName);
+    const useRef = collection(firestore, category.categoryName);
     const querySnapshot = await getDocs(useRef);
 
+    let safeClass = `${category.categoryName
+      .replace(/\s+/g, "-")
+      .toLowerCase()}`;
     let productsArea = document.querySelector(
-      `.varieties .${categories.categoryName} .products`
+      `.varieties .${safeClass} .products`
     );
 
     querySnapshot.forEach((doc) => {
