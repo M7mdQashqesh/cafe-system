@@ -129,7 +129,15 @@ function confirmDelete(categoryDiv, category) {
     .addEventListener("click", async function () {
       try {
         const useRef = doc(firestore, "categories", category.categoryName);
-
+        const useRefForProducts = collection(firestore, category.categoryName);
+        const querySnapshotForProducts = await getDocs(useRefForProducts);
+        if (querySnapshotForProducts.size !== 0) {
+          showToast(
+            `You Should Remove All Products From ${category.categoryName} Category At First`,
+            "linear-gradient(to right, #ff416c, #ff4b2b)"
+          );
+          return;
+        }
         await deleteDoc(useRef);
         categoryDiv.remove();
         model.remove();
