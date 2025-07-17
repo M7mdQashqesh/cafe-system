@@ -86,37 +86,6 @@ header i {
 /* Navbar */
 /* Header */
 
-/* Categories */
-.categories p {
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.categories ul {
-  padding: 0;
-  margin-top: 30px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 35px 10px;
-}
-
-.categories ul li {
-  padding: 8px 30px;
-  font-size: 18px;
-  color: #777;
-  border: 2px solid gray;
-  border-radius: 10px;
-  font-weight: bold;
-}
-
-.categories ul li.active {
-  background-color: white;
-  color: black;
-  border: 2px solid black;
-}
-/* Categories */
-
 /* Varieties */
 .varieties > div.hidden {
   display: none;
@@ -165,7 +134,7 @@ header i {
 }
 
 .varieties .product .description {
-  color: #777;
+  color: #aaa;
   font-size: 12px;
   overflow: hidden;
   display: -webkit-box;
@@ -194,8 +163,37 @@ header i {
   color: white;
   font-size: 40px;
   width: fit-content;
-  margin: 65% auto 0;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   animation: spin 1s linear infinite;
 }
 
+@media (max-width: 767px) {
+  #loading {
+    margin: 65% auto 0;
+    position: relative;
+    top: 0%;
+    left: 0%;
+    transform: translate(0%, 0%);
+  }
+}
 /* Loading */
+
+/* Empty Cafe */
+.empty-cafe {
+  background-color: var(--secondary-color);
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  padding: 20px 0;
+  text-align: center;
+  border-radius: 5px;
+}
+/* Empty Cafe */

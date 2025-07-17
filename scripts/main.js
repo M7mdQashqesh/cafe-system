@@ -24,20 +24,31 @@ if (JSON.parse(window.localStorage.getItem("user"))) {
   });
 }
 
+let varietiesArea = document.getElementById("varieties");
 async function getCategories() {
   document.querySelector("main").style.display = "none";
   document.getElementById("loading").style.display = "block";
+
+  let totalProductsCount = 0;
   try {
-    let useRef = collection(firestore, "categories");
-    let querySnapshot = await getDocs(useRef);
-    querySnapshot.forEach(async (doc) => {
-      let varietyRef = collection(firestore, doc.data().categoryName);
-      let varietyQuerySnapshot = await getDocs(varietyRef);
-      if (varietyQuerySnapshot.size === 0) {
+    let categoryRef = collection(firestore, "categories");
+    let querySnapshot = await getDocs(categoryRef);
+
+    let promises = querySnapshot.docs.map(async (doc) => {
+      let productRef = collection(firestore, doc.data().categoryName);
+      let productQuerySnapshot = await getDocs(productRef);
+      if (productQuerySnapshot.size === 0) {
         return;
       }
+
+      totalProductsCount += productQuerySnapshot.size;
       createVarietiesArea(doc.data());
     });
+    await Promise.all(promises);
+
+    if (totalProductsCount === 0) {
+      varietiesArea.innerHTML = `<p class="empty-cafe">No Products In Our Cafe Yet</p>`;
+    }
   } catch (error) {
     console.error("Error fetching categories:", error);
   } finally {
@@ -48,8 +59,6 @@ async function getCategories() {
 getCategories();
 
 function createVarietiesArea(category) {
-  let varietiesArea = document.getElementById("varieties");
-
   let categoryContainer = document.createElement("div");
   let safeClass = `${category.categoryName.replace(/\s+/g, "-").toLowerCase()}`;
   categoryContainer.className = safeClass;
