@@ -92,6 +92,10 @@ header i {
   visibility: hidden;
 }
 
+.varieties >div:first-of-type p {
+  margin-top: 0;
+}
+
 .varieties > div > p {
   color: white;
   font-size: 25px;

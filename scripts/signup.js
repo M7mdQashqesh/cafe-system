@@ -62,7 +62,6 @@ signupForm.addEventListener("submit", async function (e) {
     const useRef = doc(firestore, "users", userId);
 
     await setDoc(useRef, {
-      userId: userId,
       email: email,
       createdAt: new Date().toISOString(),
     });

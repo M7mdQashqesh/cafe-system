@@ -6,14 +6,13 @@ if (JSON.parse(window.localStorage.getItem("user"))) {
 }
 
 let loginForm = document.querySelector("form");
+let emailInput = document.querySelector("#email");
+let passwordInput = document.querySelector("#password");
 
 loginForm.addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  let emailInput = document.querySelector("#email");
   let email = emailInput.value.trim();
-
-  let passwordInput = document.querySelector("#password");
   let password = passwordInput.value.trim();
 
   if (!email || !password) {
@@ -43,7 +42,7 @@ loginForm.addEventListener("submit", async function (e) {
     );
     window.localStorage.setItem(
       "user",
-      JSON.stringify(userCredential.user.email)
+      JSON.stringify({ email: userCredential.user.email })
     );
 
     showToast(
@@ -57,7 +56,11 @@ loginForm.addEventListener("submit", async function (e) {
       window.location.href = "../pages/dashboard/uploadProduct.html";
     }, 500);
   } catch (error) {
-    console.error("Failed To  Login: " + error);
+    console.error(error);
+    showToast(
+      "Login failed: " + error.message,
+      "linear-gradient(to right, #ff416c, #ff4b2b)"
+    );
   }
 });
 
