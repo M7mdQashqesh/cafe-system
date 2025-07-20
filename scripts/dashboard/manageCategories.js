@@ -1,3 +1,4 @@
+import { showToast } from "../showToast.js";
 import { firestore } from "../firebase.js";
 import {
   getDocs,
@@ -200,17 +201,3 @@ cancelBtn.addEventListener("click", function (e) {
   e.preventDefault();
   modal.style.display = "none";
 });
-
-function showToast(message, background) {
-  Toastify({
-    text: message,
-    duration: 3000,
-    gravity: "top",
-    position: "right",
-    stopOnFocus: false,
-    style: {
-      background: background,
-    },
-    onClick: function () {},
-  }).showToast();
-}

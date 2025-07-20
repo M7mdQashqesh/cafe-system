@@ -1,5 +1,6 @@
 import { auth } from "./firebase.js";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import { showToast } from "./showToast.js";
 
 if (JSON.parse(window.localStorage.getItem("user"))) {
   window.location.href = "../pages/dashboard/uploadProduct.html";
@@ -63,17 +64,3 @@ loginForm.addEventListener("submit", async function (e) {
     );
   }
 });
-
-function showToast(message, background) {
-  Toastify({
-    text: message,
-    duration: 3000,
-    gravity: "top",
-    position: "right",
-    stopOnFocus: false,
-    style: {
-      background: background,
-    },
-    onClick: function () {},
-  }).showToast();
-}

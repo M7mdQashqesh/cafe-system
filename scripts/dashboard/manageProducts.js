@@ -1,3 +1,4 @@
+import { showToast } from "../showToast.js";
 import { firestore } from "../firebase.js";
 import {
   getDocs,
@@ -171,18 +172,4 @@ function confirmDelete(product, productInfo, productCollection) {
   model.querySelector(".cancel-btn").addEventListener("click", function () {
     model.remove();
   });
-}
-
-function showToast(message, background) {
-  Toastify({
-    text: message,
-    duration: 3000,
-    gravity: "top",
-    position: "right",
-    stopOnFocus: false,
-    style: {
-      background: background,
-    },
-    onClick: function () {},
-  }).showToast();
 }

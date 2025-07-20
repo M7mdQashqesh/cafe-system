@@ -5,6 +5,7 @@ import {
   getDocs,
   collection,
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+import { showToast } from "../showToast.js";
 
 let loggedUser = JSON.parse(window.localStorage.getItem("user"));
 
@@ -111,7 +112,7 @@ async function uploadAndValidateForm(e) {
     !productPrice ||
     !productCategories
   ) {
-    showToastify(
+    showToast(
       "All Fields Are Required",
       "linear-gradient(to right, #ff416c, #ff4b2b)"
     );
@@ -120,7 +121,7 @@ async function uploadAndValidateForm(e) {
 
   // Full name should be contain only characters and space
   if (!productName.match(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)) {
-    showToastify(
+    showToast(
       "Please, Enter Valid Product Name",
       "linear-gradient(to right, #ff416c, #ff4b2b)"
     );
@@ -128,7 +129,7 @@ async function uploadAndValidateForm(e) {
   }
 
   if (productPrice <= 0) {
-    showToastify(
+    showToast(
       "Please, Enter Valid Product Price (more then 0)",
       "linear-gradient(to right, #ff416c, #ff4b2b)"
     );
@@ -144,7 +145,7 @@ async function uploadAndValidateForm(e) {
       productPrice,
     });
 
-    showToastify(
+    showToast(
       "Upload Product Successfully",
       "linear-gradient(to right, #00b09b, #96c93d)"
     );
@@ -156,19 +157,4 @@ async function uploadAndValidateForm(e) {
   } catch (error) {
     console.error("Failed to Upload Product" + error);
   }
-}
-
-function showToastify(text, background) {
-  // Notification
-  Toastify({
-    text: text,
-    duration: 3000,
-    gravity: "top",
-    position: "right",
-    stopOnFocus: false,
-    style: {
-      background: background,
-    },
-    onClick: function () {},
-  }).showToast();
 }

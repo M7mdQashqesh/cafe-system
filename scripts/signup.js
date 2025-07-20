@@ -1,3 +1,4 @@
+import { showToast } from "./showToast.js";
 import { auth, firestore } from "./firebase.js";
 import {
   doc,
@@ -20,7 +21,7 @@ signupForm.addEventListener("submit", async function (e) {
   let confirmPassword = confirmInput.value.trim();
 
   if (!email || !password || !confirmPassword) {
-    showToastify(
+    showToast(
       "All fields are required",
       "linear-gradient(to right, #ff416c, #ff4b2b)"
     );
@@ -33,7 +34,7 @@ signupForm.addEventListener("submit", async function (e) {
     !password.match(/^(?=.*?[0-9])(?=.*?[A-Za-z]).{8,32}$/) ||
     password !== confirmPassword
   ) {
-    showToastify(
+    showToast(
       "Wrong in email or password, please try again",
       "linear-gradient(to right, #ff416c, #ff4b2b)"
     );
@@ -46,7 +47,7 @@ signupForm.addEventListener("submit", async function (e) {
     const snapshot = await getDocs(signedUpUserRef);
 
     if (snapshot.size !== 0) {
-      showToastify(
+      showToast(
         "Cannot Create another account, There is a registered account",
         "linear-gradient(to right, #ff416c, #ff4b2b)"
       );
@@ -66,7 +67,7 @@ signupForm.addEventListener("submit", async function (e) {
       createdAt: new Date().toISOString(),
     });
 
-    showToastify(
+    showToast(
       "Account Created Successfully",
       "linear-gradient(to right, #00b09b, #96c93d)"
     );
@@ -90,21 +91,6 @@ signupForm.addEventListener("submit", async function (e) {
       message = "Password is too weak.";
     }
 
-    showToastify(message, "linear-gradient(to right, #ff416c, #ff4b2b)");
+    showToast(message, "linear-gradient(to right, #ff416c, #ff4b2b)");
   }
 });
-
-function showToastify(text, background) {
-  // Notification
-  Toastify({
-    text: text,
-    duration: 3000,
-    gravity: "top",
-    position: "right",
-    stopOnFocus: false,
-    style: {
-      background: background,
-    },
-    onClick: function () {},
-  }).showToast();
-}

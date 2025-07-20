@@ -4,25 +4,11 @@ import {
   getDocs,
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-let cart = document.querySelector(".fa-cart-shopping");
-cart.addEventListener("click", function () {
-  window.location.href = "../pages/cart.html";
-});
-
 let loginBtn = document.getElementById("login-btn");
 let dashboardBtn = document.getElementById("dashboard-btn");
 
-if (JSON.parse(window.localStorage.getItem("user"))) {
-  loginBtn.remove();
-  dashboardBtn.addEventListener("click", function () {
-    window.location.href = "../pages/dashboard/uploadProduct.html";
-  });
-} else {
-  dashboardBtn.remove();
-  loginBtn.addEventListener("click", function () {
-    window.location.href = "../pages/login.html";
-  });
-}
+if (JSON.parse(window.localStorage.getItem("user"))) loginBtn.remove();
+else dashboardBtn.remove();
 
 let varietiesArea = document.getElementById("varieties");
 async function getCategories() {

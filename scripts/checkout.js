@@ -1,10 +1,7 @@
-// Add navigation events to header elements: logo, and go back
+import { showToast } from "./showToast.js";
+// Add navigation events to header go back element
 document.querySelector(".go-back").addEventListener("click", function () {
   history.back();
-});
-
-document.querySelector(".logo").addEventListener("click", function () {
-  window.location.href = "../index.html";
 });
 
 let confirmForm = document.querySelector("form");
@@ -19,7 +16,7 @@ function validateForm(e) {
   let address = document.getElementById("address").value.trim();
 
   if (!fullName || !phoneNumber || !address) {
-    showToastify(
+    showToast(
       "All Fields Are Required",
       "linear-gradient(to right, #ff416c, #ff4b2b)"
     );
@@ -28,7 +25,7 @@ function validateForm(e) {
 
   // Full name should be contain only characters and space
   if (!fullName.match(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)) {
-    showToastify(
+    showToast(
       "Please, Enter Valid Full Name",
       "linear-gradient(to right, #ff416c, #ff4b2b)"
     );
@@ -37,7 +34,7 @@ function validateForm(e) {
 
   // Phone number should start by 059 or 056 and must be 10 digits
   if (!phoneNumber.match(/^(059|056)\d{7}$/)) {
-    showToastify(
+    showToast(
       "Please, Enter Valid Phone Number",
       "linear-gradient(to right, #ff416c, #ff4b2b)"
     );
@@ -45,7 +42,7 @@ function validateForm(e) {
   }
 
   if (!address.match(/^[a-zA-Z0-9\s,.-]+$/i)) {
-    showToastify(
+    showToast(
       "Please, Enter Valid Address",
       "linear-gradient(to right, #ff416c, #ff4b2b)"
     );
@@ -53,21 +50,6 @@ function validateForm(e) {
   }
 
   completeOrder(fullName, phoneNumber, address);
-}
-
-function showToastify(text, background) {
-  // Notification
-  Toastify({
-    text: text,
-    duration: 3000,
-    gravity: "top",
-    position: "right",
-    stopOnFocus: false,
-    style: {
-      background: background,
-    },
-    onClick: function () {},
-  }).showToast();
 }
 
 // Generate Whatsapp message, and send the information about user and products Details
@@ -91,14 +73,14 @@ function completeOrder(fullName, phoneNumber, address) {
     allTextMessage = userInfo + allTextMessage;
     url += encodeURIComponent(allTextMessage);
     window.localStorage.removeItem("cartProducts");
-    showToastify(
+    showToast(
       "Order Sent Successfully",
       "linear-gradient(to right, #00b09b, #96c93d)"
     );
     window.open(url, "_blank").focus();
     window.location.href = "../index.html";
   } else {
-    showToastify(
+    showToast(
       "Your cart is empty. Please add items before ordering.",
       "linear-gradient(to right, #ff416c, #ff4b2b)"
     );

@@ -1,8 +1,6 @@
-// Add navigation events to header elements: logo, and go back
-document.querySelector(".logo").addEventListener("click", function () {
-  window.location.href = "../index.html";
-});
+import { showToast } from "./showToast.js";
 
+// Add navigation events to header go back element
 document.querySelector(".go-back").addEventListener("click", function () {
   history.back();
 });
@@ -73,19 +71,10 @@ productsContainer.addEventListener("click", function (e) {
     if (index !== -1) {
       removeProduct(index);
     }
-
-    // Notification
-    Toastify({
-      text: "The product was removed from the cart",
-      duration: 3000,
-      gravity: "top",
-      position: "right",
-      stopOnFocus: false,
-      style: {
-        background: "linear-gradient(to right, #ff416c, #ff4b2b)",
-      },
-      onClick: function () {},
-    }).showToast();
+    showToast(
+      "The product was removed from the cart",
+      "linear-gradient(to right, #ff416c, #ff4b2b)"
+    );
   }
 });
 
@@ -118,15 +107,15 @@ function generateTotalPriceForTotalProducts() {
     <p>Total Price</p>
     <p>${totalPriceForTotalProducts + shippingCost} ₪</p>
   </div>
-  <button onclick="checkout()" class="checkout">Checkout</button>
+  <button class="checkout">Checkout</button>
   `;
 
   // Update the total price container with the new markup
   totalPricesDiv.innerHTML = totalPriceForTotalProductsHTML;
-}
 
-function checkout() {
-  window.location.href = "../pages/checkout.html";
+  document.querySelector(".checkout").addEventListener("click", function () {
+    window.location.href = "../pages/checkout.html";
+  });
 }
 
 // Show the price summary if there are products in the cart, otherwise hide it

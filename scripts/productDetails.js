@@ -1,16 +1,4 @@
-// Add navigation events to header elements: logo, go back, and cart icon
-document.querySelector(".logo").addEventListener("click", () => {
-  window.location.href = "../index.html";
-});
-document.querySelector(".go-back").addEventListener("click", function () {
-  window.location.href = "../index.html";
-});
-document
-  .querySelector(".fa-cart-shopping")
-  .addEventListener("click", function () {
-    window.location.href = "../pages/cart.html";
-  });
-
+import { showToast } from "./showToast.js";
 let productDetailsDiv = document.getElementById("product-details");
 
 let productDetails = JSON.parse(window.localStorage.getItem("productDetails"));
@@ -30,15 +18,15 @@ function renderProductDetails() {
   <div class="quantity">
     <p>Quantity:</p>
     <div>
-      <button onclick="increaseQuantity()">+</button>
+      <button class="increase-quantity">+</button>
       <input type="number" value=${quantity} min="1" />
-      <button onclick="decreaseQuantity()">-</button>
+      <button class="decrease-quantity">-</button>
     </div>
   </div>
 
   <div class="price-and-add">
     <p class="total-price">${totalPrice} ₪</p>
-    <button onclick="saveToCart()">Add To Cart</button>
+    <button class="save-to-cart">Add To Cart</button>
   </div>
   `;
   productDetailsDiv.innerHTML = details;
@@ -64,23 +52,27 @@ document.querySelector("input").addEventListener("blur", function () {
 });
 
 // Increment quantity and update total price
-function increaseQuantity() {
-  quantity++;
-  document.querySelector("input").value = quantity;
-  editTotalPrice();
-}
-
-// Decrement quantity (min 1) and update total price
-function decreaseQuantity() {
-  if (quantity > 1) {
-    quantity--;
+document
+  .querySelector(".increase-quantity")
+  .addEventListener("click", function () {
+    quantity++;
     document.querySelector("input").value = quantity;
     editTotalPrice();
-  }
-}
+  });
+
+// Decrement quantity (min 1) and update total price
+document
+  .querySelector(".decrease-quantity")
+  .addEventListener("click", function () {
+    if (quantity > 1) {
+      quantity--;
+      document.querySelector("input").value = quantity;
+      editTotalPrice();
+    }
+  });
 
 // Add selected product to cart in localStorage and show confirmation toast notification
-function saveToCart() {
+document.querySelector(".save-to-cart").addEventListener("click", function () {
   let cartProducts =
     JSON.parse(window.localStorage.getItem("cartProducts")) || [];
   let pDetails = {
@@ -93,16 +85,8 @@ function saveToCart() {
   cartProducts.push(pDetails);
   window.localStorage.setItem("cartProducts", JSON.stringify(cartProducts));
 
-  // Notification
-  Toastify({
-    text: "The product was added to the cart",
-    duration: 3000,
-    gravity: "top",
-    position: "right",
-    stopOnFocus: false,
-    style: {
-      background: "linear-gradient(to right, #00b09b, #96c93d)",
-    },
-    onClick: function () {},
-  }).showToast();
-}
+  showToast(
+    "The product was added to the cart",
+    "linear-gradient(to right, #00b09b, #96c93d)"
+  );
+});
